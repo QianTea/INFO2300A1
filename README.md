@@ -9,3 +9,8 @@ To run the software, users are supposed to download virtual studio 2022. After t
 
 ## How to Install and Configure the Web Site 
  In VS studio 2022, users only need to open the .sln file and then they can see our code. Just click Run and select the default browser to successfully open our page on the local host 
+
+# License - MIT License
+It grants to anyone who obtains a copy of the software and related documentation the right to use, copy, modify, incorporate, distribute, publish, sublicense and sell a copy of the software.
+
+The only condition required to use this software is that the same copyright notice be included on all copies or any substantial portion of the software
