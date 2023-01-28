@@ -14,6 +14,3 @@ To run the software, users are supposed to download virtual studio 2022. After t
 It grants to anyone who obtains a copy of the software and related documentation the right to use, copy, modify, incorporate, distribute, publish, sublicense and sell a copy of the software.
 
 The only condition required to use this software is that the same copyright notice be included on all copies or any substantial portion of the software
-
-
-change for reverse
