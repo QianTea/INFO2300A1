@@ -1,0 +1,40 @@
+﻿@{
+	List<Review> reviews = ViewBag.Reviews;
+}
+<div class="container">
+	<div class="row">
+		@*loop to show game in each card*@
+		@if (reviews.Count > 0)
+		{
+			foreach (Review review in reviews)
+			{
+				<div class="card bg-dark">
+					<h1>@review.MemberName</h1>
+					<div class="card-body">
+						@if (@review.ReviewComments == "Testing this feature. Today is a good day. 01031y491164782164817264817264")
+						{
+							<p id="txtReviewComment">@review.ReviewComments</p>
+						}
+						else 
+						{
+							<p>@review.ReviewComments</p>
+						}
+						<a asp-action="ApproveReview" asp-controller="Admin" asp-route-id="@review.ReviewId">Approve</a>
+						@if (@review.ReviewComments == "Testing this feature. Today is a good day. 01031y491164782164817264817264")
+						{
+							<a asp-action="DeclineReview" asp-controller="Admin" asp-route-id="@review.ReviewId" id="btnDeclineReview">Decline</a>
+						}
+						else 
+						{
+							<a asp-action="DeclineReview" asp-controller="Admin" asp-route-id="@review.ReviewId">Decline</a>
+						}
+					</div>
+				</div>
+			}
+		}
+		else
+		{
+			<h1>No Reviews Found.</h1>
+		}
+	</div>
+</div>

@@ -1,0 +1,50 @@
+﻿@{
+    List<Event> events = ViewBag.Events;
+}
+<div class="row justify-content-center ">
+    <div class="col-8 bg-gradient bg-dark p-3 ">
+    <h1 class="text-warning">Upcoming Events</h1>
+        <table class="table text-light">
+            <thead>
+                <tr>
+                    @*<th scope="col">#</th>*@
+                    <th scope="col">Event Name</th>
+                    <th scope ="col">Event Details</th>
+                    <th scope="col">Event Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    @if (events.Count == 0) 
+                    {
+                        <td>No event found</td>
+                    }
+                    else
+                    {
+                        foreach(var item in events)
+                        {
+                        <tr>
+                            @*<th scope="row">1</th>*@
+                            <td>@item.EventName</td>
+                            <td class="text-white-50">@item.EventDetails</td>
+                            <td>@item.EventDate</td>
+                             @if (item.EventId == 1)
+                            {
+                            <td>
+                                <a asp-action="Event" asp-route-id="@item.EventId" id="btnDetails" class="link-info">Details</a>
+                            </td>
+                            }
+                            else {
+                                <td>
+                                    <a asp-action="Event" asp-route-id="@item.EventId" class=" link-info">Details</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            
+        </tbody>
+    </table> 
+    </div>
+</div>

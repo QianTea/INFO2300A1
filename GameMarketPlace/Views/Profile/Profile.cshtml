@@ -1,0 +1,364 @@
+﻿@model Member
+@{
+    ViewData["title"] = "Profile";
+    List<CreditCard> creditCards = ViewBag.CreditCards;
+    string filter = ViewBag.Filter;
+}
+<style>
+
+</style>
+<div class=" bg-dark bg-gradient rounded-5 shadow-5-strong p-5">
+<h1>Hello, @Model.NormalizedUserName</h1>
+@*<h3>@Model.Email</h3>*@
+
+<form method="post" asp-action="Update" asp-controller="Profile" >
+
+    
+    <div class="row">
+
+        @*left - scroll info*@
+        <div class="col-9">
+            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+                @if (filter == "personal") {
+                    <div class="p-1 pb-5 ">
+                        <div class="divid-line">
+                            <h4 id="list-item-1">1.Personal Info</h4>
+                        </div>
+
+                        @*firstname & lastname*@
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.FirstName">First Name</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" asp-for="@Model.FirstName" class="form-control" placeholder="First name" aria-label="First name" id="txtFirstName">
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.LastName">Last Name</label>
+                            </div>
+                            <div class="col-4">
+                                <input type="text" asp-for="@Model.LastName" class="form-control" placeholder="Last name" aria-label="Last name" id="txtLastName">
+                            </div>
+                        </div>
+
+                        @*gender*@
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.GenderId">Gender</label>
+                            </div>
+                            <div class="col-4">
+                                <select asp-for="@Model.GenderId" class="form-control">
+                                    @foreach (Gender item in ViewBag.AllGenders)
+                                    {
+                                        <option value="@item.GenderId">@item.GenderName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        @*date of birth*@
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.LastName">Date of Birth</label>
+                            </div>
+                            <div class="col-4 ">
+                                <div class="form-control">
+                                   @Html.TextBox("DateOfBirth", Model.DateOfBirth, "{0:yyyy-MM-dd}", new{ @style="", type="date" })
+                                </div>
+                               <div asp-validation-summary="All" class="text-danger"></div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    @*2. Favourites*@
+                    <div class="p-1 pb-5">
+                        <div class="divid-line">
+                            <h4 id="list-item-2">2.Favourites</h4>
+                        </div>
+                        @*dropdown list - Platform*@
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.PlatformId">Favourite Platform</label>
+                            </div>
+                            <div class="col-4">
+                                <select asp-for="@Model.PlatformId" id="selectPlatform" class="form-control">
+                                    @foreach (var item in ViewBag.AllPlatforms)
+                                    {
+                                        <option value="@item.PlatformId">@item.PlatformName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        @*dropdown list - Genres*@
+                        <div class="row p-2">
+                            <div class="col-4">
+                                <label asp-for="@Model.GenreId">Favourite Genres</label>
+                            </div>
+                            <div class="col-4">
+                                <select asp-for="@Model.GenreId" id="selectGenre" class="form-control">
+                                    @foreach (var item in ViewBag.AllGenres)
+                                    {
+                                        <option value="@item.GenreId">@item.GenreName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @*5. Check box of receive Email*@
+                    <div class="p-2 bg-secondary text-black rounded">
+                        <div class="form-check">
+                            <label class="form-check-label text-center rounded p-1 text-light" asp-for="@Model.PromotionalEmail">Would You like to get promotional emails?</label>
+                            <input class="form-check-input form-check " type="checkbox" asp-for="@Model.PromotionalEmail" />
+                        </div>
+                    </div>
+                    <div class="pt-4 row">
+                        <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+                    </div>
+                }
+                else {
+                    @*4. Credit cards*@
+                    <div class="p-1 pb-5">
+                        <div class="divid-line">
+                            <h4 id="list-item-4">4.Credit Cards</h4>
+                        </div>
+
+                        <div class="row">
+                            @if (creditCards.Count == 0)
+                            {
+                                <p class="text-center text-warning" id="txtNoCardFound">No Card Found</p>
+                                <a asp-action="AddCreditCard" asp-controller="Profile" class="btn btn-success btn-change  " id="btnAddCard">Add</a>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-4 ">
+                                        <h6>Credit Card Number</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <h6>CCV</h6>
+                                    </div>
+                                    <div class="col-3">
+                                         <h6>Expiry Date</h6>
+                                    </div>
+                                    <div class="col-3">
+                                        @*<h6>Modify</h6>*@
+                                    </div>
+                                </div>
+                                foreach (CreditCard card in creditCards)
+                                {
+                                    if (card.CardNumber == "1234123412341234")
+                                    {
+                                        <div class="col-4">
+                                            <p id="txtCardNumber">@card.CardNumber</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-4">
+                                            <p>@card.CardNumber</p>
+                                        </div>
+                                    }
+                                    <div class="col-2">
+                                        <p>@card.CVV</p>
+                                    </div>
+                                    <div class="col-3">
+                                        <p>@card.ExpiryDate</p>
+                                    </div>
+                                    <div class="col-3">
+                                        @if (card.CardNumber == "1234123412341234")
+                                        {
+                                            <div>
+                                                <a class="btn-danger" asp-action="RemoveCreditCard" asp-controller="Profile" asp-route-id="@card.CreditCardId" id="btnRemoveCard">Remove</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <a class="btn-danger" asp-action="RemoveCreditCard" asp-controller="Profile" asp-route-id="@card.CreditCardId">Remove</a>
+                                            </div>
+                                        }
+                                        <a class="btn-primary" asp-action="AddCreditCard" asp-controller="Profile" id="btnAddCard">Add</a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }          
+                <br />       
+            </div>
+        </div>
+
+@*right - side bar - scroll nav*@
+        @if (filter == "personal") {
+            <div class="col-3">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action bg-primary text-white" asp-route-filter="personal" asp-action="profile" id="navPersonal">Personal Info</a>
+                    <a class="list-group-item list-group-item-action" asp-action="addresses" id="navAddress">Addresses</a>
+                    <a class="list-group-item list-group-item-action" asp-route-filter="creditcard" asp-action="profile" id="navCreditCard">Credit Cards</a>
+                </div>
+@*                <div class="pt-2">
+                    <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+                </div>*@
+            </div>
+        }
+        else if (filter == "addresses") {
+            <div class="col-3">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action" asp-route-filter="personal" asp-action="profile" id="navPersonal">Personal Info</a>
+                    <a class="list-group-item list-group-item-action bg-primary text-white" asp-action="addresses" id="navAddress">Addresses</a>
+                    <a class="list-group-item list-group-item-action" asp-route-filter="creditcard" asp-action="profile" id="navCreditCard">Credit Cards</a>
+                </div>
+@*                <div class="pt-2">
+                    <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+                </div>*@
+            </div>
+        }
+        else if (filter == "creditcard") {
+            <div class="col-3">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action" asp-route-filter="personal" asp-action="profile" id="navPersonal">Personal Info</a>
+                    <a class="list-group-item list-group-item-action" asp-action="addresses" id="navAddress">Addresses</a>
+                    <a class="list-group-item list-group-item-action bg-primary text-white" asp-route-filter="creditcard" asp-action="profile" id="navCreditCard">Credit Cards</a>
+                </div>
+ @*               <div class="pt-2">
+                    <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+                </div>*@
+            </div>
+        }
+        else {
+            <div class="col-3">
+                <div id="list-example" class="list-group">
+                    <a class="list-group-item list-group-item-action" asp-route-filter="personal" asp-action="profile" id="navPersonal">Personal Info</a>
+                    <a class="list-group-item list-group-item-action" asp-route-filter="addresses" asp-action="profile" id="navAddress">Addresses</a>
+                    <a class="list-group-item list-group-item-action" asp-route-filter="creditcard" asp-action="profile" id="navCreditCard">Credit Cards</a>
+                </div>
+@*                <div class="pt-2">
+                    <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+                </div>*@
+            </div>
+        }
+    </div>
+
+    <input type="hidden" asp-for="Id"/>
+    <input type="hidden" asp-for="MemberId" />
+    <input type="hidden" asp-for="WishListId" />
+
+</form>
+</div>
+           
+
+@*YL*@
+
+
+@*     <h2>Credit Cards</h2>
+       <table>
+        <thead>
+            <tr>
+                <th>Credit Card Number</th>
+                <th>CCV</th>
+                <th>Expirey Date</th>
+            </tr>
+        </thead>
+        <tbody class="flex-row">
+            <tr>
+                <td>CardNumber</td>
+                <td>CVV</td>
+                <td>ExpiryDate</td>
+                <td>
+                    <div>
+                        <a class="btn-primary" asp-action="AddCreditCard" >Add</a>
+                        <a class="btn-primary" asp-action="EditCreditCard" >Edit</a>
+                    </div>
+                </td>
+                            
+                 @if (creditCards.Count == 0)
+                {
+                <td>No Card Found</td>
+                <td><a asp-action="AddCreditCard" asp-controller="Profile" class="btn-primary">Add</a></td>
+                }
+                else
+                {
+                foreach(CreditCard card in creditCards)
+                {
+                <td>@card.CardNumber</td>
+                <td>@card.CVV</td>
+                <td>@card.ExpiryDate</td>
+                <td>
+                <div>
+                <a class="btn-primary" asp-action="AddCreditCard" asp-controller="Profile">Add</a>
+                <a class="btn-primary" asp-action="EditCreditCard" asp-controller="Profile" asp-route-id="@card.CreditCardId">Edit</a>
+                </div>
+                </td>
+                }
+                }
+            </tr>
+        </tbody>
+    </table>*@
+
+@*<div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Credit Card Number</th>
+                                    <th>CCV</th>
+                                    <th>Expirey Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="flex-row">
+                                <tr>
+                                    @if (creditCards.Count == 0)
+                                    {
+                                        <td id="txtNoCardFound">No Card Found</td>
+                                        <td><a asp-action="AddCreditCard" asp-controller="Profile" class="btn-primary" id="btnAddCard">Add</a></td>
+                                    }
+                                    else
+                                    {
+                                        foreach (CreditCard card in creditCards)
+                                        {
+                                            if (card.CardNumber == "123412341234")
+                                            {
+
+                                                <td id="txtCardNumber">@card.CardNumber</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@card.CardNumber</td>
+                                            }
+                                            <td>@card.CVV</td>
+                                            <td>@card.ExpiryDate</td>
+                                            <td>
+                                                @if (card.CardNumber == "123412341234")
+                                                {
+                                                    <div>
+                                                        <a class="btn-primary" asp-action="AddCreditCard" asp-controller="Profile" id="btnAddCard">Add</a>
+                                                        <a class="btn-primary" asp-action="RemoveCreditCard" asp-controller="Profile" asp-route-id="@card.CreditCardId" id="btnRemoveCard">Remove</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        <a class="btn-primary" asp-action="AddCreditCard" asp-controller="Profile" id="btnAddCard">Add</a>
+                                                        <a class="btn-primary" asp-action="RemoveCreditCard" asp-controller="Profile" asp-route-id="@card.CreditCardId">Remove</a>
+                                                    </div>
+                                                }
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>*@
+@*                    <label>Credit Card Number</label>
+                    <input class="form-control" type="text" />
+                    <div class="row">
+                        <div class="col-6">
+                            <label>CCV</label>
+                            <input class="form-control" type="text" />
+                        </div>
+                        <div class="col-6">
+                            <label>Expirey Date</label>
+                            <input class="form-control" type="text" />
+                        </div>
+                    </div>*@

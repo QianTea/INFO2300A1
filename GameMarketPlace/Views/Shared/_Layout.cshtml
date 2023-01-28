@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using GameMarketPlace.Models.DomainModels;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GameMarketPlace</title>
+    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*icons*@
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster" type="text/css">
+    <link rel="stylesheet" href="~/GameMarketPlace.styles.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3 bg-darkblue">
+            <div id="navpad" class=" container-fluid ">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img alt="Virtual Game Market Logo" src="/img/logo.png" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav  flex-grow-1">
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @inject SignInManager<Member> signInManger
+                        @*Checks to see if the user is logged in*@
+                        @if (signInManger.IsSignedIn(User))
+                        {
+                            if (User.Identity.Name == "admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Admin" asp-action="Admin" id="btnAdmin">Admin</a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Profile" asp-action="Profile" id="btnProfile" asp-route-filter="personal">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Wishlist" asp-action="Wishlist" id="btnWishlist">Wishlist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Event" asp-action="EventListing" id="btnEvent">Events</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Cart" asp-action="Cartlist" id="btnCart">Cart</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                        @*Checks to see if the user is logged in*@
+                        @if (signInManger.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-action="Logout" asp-controller="Account" asp-area="" class="ml-5">
+                                    <span class="text-muted" id="txtWelcome">Welcome, @User.Identity.Name!</span>
+                                    <input type="submit" value="Log Out" class="btn btn-outline-info" />
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            // Gets current action
+                            var action = ViewContext.RouteData.Values["action"]?.ToString();
+                            
+                                <li class="nav-item">
+                                <a asp-action="Register" asp-controller="Account" asp-area="" class="btn btn-warning" id="btnJoinUs">Join Us</a>
+                                </li>
+                                <li class="nav-item">
+                                <a asp-action="Login" asp-controller="Account" asp-area="" class="btn btn-light" id="btnLogin">Log In</a>
+                                </li>
+                         
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="container text-white ">
+
+    @RenderBody()
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <p class="p-5"></p>
+</body>
+<footer id="footerpad" class="mt-auto border-top footer text-muted text-center">
+    <div class="container">
+        &copy; 2022 - GameMarketPlace - NOVA
+    </div>
+</footer>
+</html>

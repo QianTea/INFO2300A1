@@ -1,0 +1,58 @@
+﻿
+@{
+    List<Game> wishlist = ViewBag.Wishlist;
+}
+<div class="row justify-content-center bg-gradient p-3 pb-5">
+    <div class="col-xl-5 col-md-8 ">
+        @inject SignInManager<Member> signInManger
+        @if (signInManger.IsSignedIn(User))
+        {
+            <h1 class="text-info pb-2"> @User.Identity.Name's <div class="text-warning d-inline">Wishlist</div></h1>
+        }
+        else
+        {
+            <h1 class="text-info pb-2"><div class="text-warning d-line">Wishlist</div></h1>
+        }
+        <table class="table text-light">
+            <thead class="text-white">
+                <tr>
+                    @*<th scope="col">#</th>*@
+                    <th scope ="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Release Date</th>
+                </tr>
+            </thead>
+            <tbody class="text-white-50">
+                
+                    @if (wishlist.Count == 0)
+                    {
+                        <td id="txtNoGames">No Games Found</td>
+                    }
+                    else 
+                    {
+                        foreach(Game game in wishlist) 
+                        {
+                        <tr>
+                            @if (game.GameName == "Call of Duty") {
+                                @*<th scope="row">1</th>*@
+                            <th scope="row" class="text-white" id="txtGameName">@game.GameName</th>
+                            }
+                            else {
+
+                                @*<th scope="row">1</th>*@
+                            <th scope="row" class="text-white">@game.GameName</th>
+                            }
+                            <td>@game.GamePrice</td>
+                            <td>@game.ReleaseDate</td>
+                            <td>
+                                <a asp-controller="Game" asp-action="RemoveFromWishlist" asp-route-id="@game.GameId" asp-route-wishlist="wishlist">Remove</a>
+                            </td>
+                        </tr>
+                        }
+                    
+                    }
+                
+            </tbody>
+        </table>
+    </div>
+</div>

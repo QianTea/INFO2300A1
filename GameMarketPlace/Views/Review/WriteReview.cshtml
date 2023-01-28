@@ -1,0 +1,32 @@
+﻿@model ReviewViewModel
+@{
+    Game game = ViewBag.Game;
+    Member member = ViewBag.Member;
+}
+
+<h1>Review: @game.GameName</h1>
+<div asp-validation-summary="All" class="text-danger" id="txtErrors"></div>
+<form method="post" asp-action="WriteReview" asp-controller="Review">
+    <h3>Review Comments</h3>
+    <textarea asp-for="ReviewComments" rows="10" cols="30" style="resize: none;" id="txtReviewComments">
+    </textarea>
+
+    <br />
+    <br />
+    <br />
+    <label asp-for="Rating">Rating</label>
+    <select asp-for="Rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <input type="hidden" value="@game.GameId" asp-for="GameId" />
+    <input type="hidden" value="@member.UserName" asp-for="MemberName" />
+    <br />
+    <br />
+    <br />
+    <input type="submit" value="submit" class="btn btn-primary" id="btnSubmit" />
+</form>

@@ -1,0 +1,58 @@
+﻿@{
+	List<Game> games = ViewBag.Games;
+}
+
+@*game card layout*@
+<div class="container">
+	<a class="btn btn-primary" asp-action="AddGame" asp-controller="Admin" id="btnAddGame">Add Game</a>
+	<div class="row">
+		@*loop to show game in each card*@
+		@if (games.Count > 0)
+		{
+			foreach (Game game in games)
+			{
+				<div class="col-lg-3 col-md-4 col-sm-12 p-1">
+					<div class="card bg-dark bg-gradient p-1">
+						<a asp-controller="Game" asp-action="Game" asp-route-id="@game.GameId">
+							<img class="card-img-top" alt="game pic" src="/img/game2.jpg" />
+						</a>
+						<div class=" card-block m-2">
+							@if (game.GameName == "No Mans Sky")
+							{
+								<h5 class="card-title" id="txtGameName">@game.GameName</h5>
+							}
+							else
+							{
+								<h5 class="card-title">@game.GameName</h5>
+							}
+							<p class="card-text">@game.Publisher</p>
+							<p>Price: $@game.GamePrice</p>
+							@if (game.GameName == "Call of Duty")
+							{
+								<a class="btn btn-primary" asp-action="Game" asp-controller="Game" asp-route-id="@game.GameId" id="btnDetails">Details</a>
+							}
+							else
+							{
+								<a class="btn btn-primary" asp-action="Game" asp-controller="Game" asp-route-id="@game.GameId">Details</a>
+							}
+							<a class="btn btn-primary" asp-action="EditGame" asp-controller="Admin" asp-route-id="@game.GameId">Edit</a>
+							@if (game.GameName == "No Mans Sky")
+							{
+								<a class="btn btn-danger" asp-action="RemoveGame" asp-controller="Admin" asp-route-id="@game.GameId" id="btnRemoveGame">Remove</a>
+							}
+							else
+							{
+								<a class="btn btn-danger" asp-action="RemoveGame" asp-controller="Admin" asp-route-id="@game.GameId">Remove</a>
+							}
+						</div>
+					</div>
+				</div>
+			}
+		}
+		else
+		{
+			<h1>No Games Found.</h1>
+			<h2>More Games Coming Soon </h2>
+		}
+	</div>
+</div>

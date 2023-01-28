@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+  font-size: 1em;
+}
+
+@media (min-width: 48em) {
+    html {
+        font-size: 1.25em;
+    }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+  /*height:1800px;*/
+
+  }
+
+body {
+    margin-bottom: 60px;
+    background-image: url('../img/bg-color.png');
+    height: 100%;
+}
+
+/*navigation bar*/
+.navbar .nav-link {
+    color: #361f78;
+}
+
+#navpad {
+    padding-left: 80px;
+    padding-right: 80px;
+}
+#footerpad {
+    background-color: #221f28;
+    margin-top: auto
+}
+.btn {
+    margin-left: 10px;
+}
+
+.dividing-line {
+    display: flex;
+    align-items: center;
+    font-size: 0.4rem;
+    color: lightgrey;
+}
+
+    .dividing-line::before,
+    .dividing-line::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: lightgrey;
+    }
+
+.divid-line {
+    display: flex;
+    font-size: 0.4rem;
+    color: CornflowerBlue;
+}
+
+
+.divid-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: CornflowerBlue;
+}
+.borderGame {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #DBDBDB;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #DBDBDB;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #DBDBDB;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #DBDBDB;
+}
+
+img#dntCaptchaImg {
+    height: 60px;
+}
+
+/*use this to change btn's color*/
+.btn.btn-change {
+    background-color: #6EAF6E;
+    border-color: #6EAF6E;
+}
+/*sign in page*/
+#signin {
+    background-image: url('../wwwroot/img/bg-sign.png');
+    height: 100%;
+}
+
+/*game detail page*/
+article {
+    line-height:initial;
+}
+
+/*wish lish page*/
+/*table {
+    counter-reset: rowNumber;
+}
+
+table tr {
+    counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}*/

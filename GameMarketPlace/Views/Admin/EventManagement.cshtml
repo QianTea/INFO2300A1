@@ -1,0 +1,29 @@
+﻿@{
+	List<Event> events = ViewBag.Events;
+}
+<div class="container">
+	<a class="btn btn-primary" asp-action="AddEvent" asp-controller="Admin">Add Event</a>
+	<br />
+	<div class="row">
+		@*loop to show game in each card*@
+		@if (events.Count > 0)
+		{
+			foreach (Event theEvent in events)
+			{
+				<div class="card bg-dark">
+					<h1>@theEvent.EventName</h1>
+					<div class="card-body">
+						<a asp-action="Event" asp-controller="Event" asp-route-id="@theEvent.EventId">Details</a>
+						<a asp-action="EditEvent" asp-controller="Admin" asp-route-id="@theEvent.EventId">Edit</a>
+						<a asp-action="RemoveEvent" asp-controller="Admin" asp-route-id="@theEvent.EventId">Remove</a>
+					</div>
+				</div>
+			}
+		}
+		else
+		{
+			<h1>No Events Found.</h1>
+			<h2>More Events Coming Soon </h2>
+		}
+	</div>
+</div>

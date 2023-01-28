@@ -1,0 +1,94 @@
+﻿@model Member
+@*3. Addresses*@
+    <div class="divid-line">
+        <h4 id="list-item-3">3.Addresses</h4>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-action="Addresses" method="post" asp-controller="Profile">
+        <div class="p-1">
+            <h5 class="text-center">Shipping Address</h5>
+            @*Unit Number*@
+            <label asp-for="@Model.APSuiteNumber">Apartment/ Unit Number</label>
+            <input class="form-control" type="text" asp-for="@Model.APSuiteNumber" value="@Model.APSuiteNumber" />
+            @*Street Address*@
+            <label asp-for="@Model.StreetAddress">Street Address</label>
+            <input class="form-control" type="text" asp-for="@Model.StreetAddress" value="@Model.StreetAddress" id="txtStreetAddress" />
+
+            <div class="row">
+                @*City*@
+                <div class="col-4">
+                    <label asp-for="@Model.City">City</label>
+                    <input class="form-control" type="text" asp-for="@Model.City" value="@Model.City" />
+                </div>
+                @*Province*@
+                <div class="col-4">
+                    <label asp-for="@Model.PlatformId">Province</label>
+                    <select asp-for="@Model.ProvinceId" class="form-control">
+                        @foreach (Province item in ViewBag.AllProvinces)
+                        {
+                            <option value="@item.ProvinceId">@item.ProvinceName</option>
+                        }
+                    </select>
+                </div>
+                @*Postal Code*@
+                @*Qs:No data here, need to add 'Postal Code'col in table address*@
+                <div class="col-4">
+                    <label>Postal Code</label>
+                    <input class="form-control" type="text" value="" />
+                </div>
+            </div>
+        </div>
+        <br />
+        @* Ask if 2 addresses same*@
+        <div class="p-2 "></div>
+        <div class="border border-1 border-dark bg-secondary rounded p-1">
+            <div class="form-check ">
+                <label class="form-check-label text-center p-1"> Is your shipping address the same as the mailing address?</label>
+                <input class="form-check-input form-check " type="checkbox" />
+            </div>
+        </div>
+        <div class="p-2 "></div>
+
+        @*Mailing Address*@
+        @*<label class="pt-1" asp-for="@Model.MailingAddress">Mailing Address</label>
+        <input class="form-control" type="text" asp-for="@Model.MailingAddress" value="@Model.MailingAddress" id="txtMailingAddress" />*@
+        <div class=" p-1">
+            <h5 class="text-center">Mailing Address</h5>
+
+            @*Unit Number*@
+            <label asp-for="@Model.APSuiteNumber">Apartment/ Unit Number</label>
+            <input class="form-control" type="text" asp-for="@Model.APSuiteNumber" value="@Model.APSuiteNumber" />
+            @*Street Address*@
+            <label asp-for="@Model.MailingAddress">Mailing Street Address</label>
+            <input class="form-control" type="text" asp-for="@Model.MailingAddress" value="@Model.MailingAddress" id="txtMailingAddress" />
+            @*<input class="form-control" type="text" asp-for="@Model.StreetAddress" value="@Model.StreetAddress" id="txtStreetAddress" />*@
+
+            <div class="row">
+                @*City*@
+                <div class="col-4">
+                    <label asp-for="@Model.City">City</label>
+                    <input class="form-control" type="text" asp-for="@Model.City" value="@Model.City" />
+                </div>
+                @*Province*@
+                <div class="col-4">
+                    <label asp-for="@Model.PlatformId">Province</label>
+                    <select asp-for="@Model.ProvinceId" class="form-control">
+                        @foreach (Province item in ViewBag.AllProvinces)
+                        {
+                            <option value="@item.ProvinceId">@item.ProvinceName</option>
+                        }
+                    </select>
+                </div>
+                @*Postal Code*@
+                @*Qs:No data here, need to add 'Postal Code'col in table address*@
+                <div class="col-4">
+                    <label>Postal Code</label>
+                    <input class="form-control" type="text" value="" />
+                </div>
+            </div>
+        </div>
+        <div class=" row">
+            <button type="submit" class="btn btn-change btn-success" id="btnSubmit">Save</button>
+        </div>
+    </form>

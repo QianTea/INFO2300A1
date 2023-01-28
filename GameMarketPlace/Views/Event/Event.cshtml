@@ -1,0 +1,29 @@
+﻿@model Event;
+@{
+    bool registered = ViewBag.Registered;
+}
+<div class="bg-dark bg-gradient p-3">
+@if (Model == null) {
+    <h1>Event Not Found</h1>
+}
+else {
+    <h1 class="text-info text-center">@Model.EventName</h1>
+    <div class="row p-4 text-center">
+        <div class="col-8">
+            <h4>@Model.EventDate</h4>
+        </div>
+        <div class="col-3">
+            @if (registered) {
+                <a class="btn btn-outline-danger" asp-action="UnregisterEvent" asp-route-id="@Model.EventId" id="btnUnregister">Unregister</a>
+            }
+            else {
+                <a class="btn btn-success btn-change" asp-action="RegisterEvent" asp-route-id="@Model.EventId" id="btnRegister">Register</a>
+            }
+        </div>
+    </div>
+    <div class=" row pb-5">
+        <p class="col-2"></p>
+        <p class="col-8 ">@Model.EventDetails</p>
+    </div>
+}
+</div>

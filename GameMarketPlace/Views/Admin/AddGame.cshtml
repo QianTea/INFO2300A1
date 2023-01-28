@@ -1,0 +1,43 @@
+﻿@model GameViewModel
+@{
+    ViewData["title"] =  "Add Game";
+}
+<div asp-validation-summary="All" class="text-danger" id="txtError"></div>
+<div class="row justify-content-center">
+    <div class="col-xl-5 col-md-8">
+        <form method="post" asp-action="AddGame" asp-controller="Admin">
+            <label asp-for="GameName">Game Name</label>
+            <input type="text" asp-for="GameName" id="txtGameNameInput" class="form-control" />
+
+            <label asp-for="GamePrice">Game Price</label>
+            <input type="text" asp-for="GamePrice" id="txtGamePriceInput" class="form-control" />
+
+            <label asp-for="Inventory">Inventory</label>
+            <input type="text" asp-for="Inventory" id="txtInventoryInput" class="form-control" />
+
+            <label asp-for="PhysicalEditor">Physical Editor</label>
+            <input type="text" asp-for="PhysicalEditor" id="txtPhysicalEditorInput" class="form-control" />
+
+            <label asp-for="Publisher">Publisher</label>
+            <input type="text" asp-for="Publisher" id="txtPublisherInput" class="form-control" />
+
+            <label asp-for="ReleaseDate">Release Date</label>
+            <input type="date" asp-for="ReleaseDate" id="dateReleaseDateInput" class="form-control" />
+
+            <label asp-for="GenreId">Genre:</label>
+            <div class="col-4">
+                <select asp-for="GenreId" class="form-control">
+                    @foreach (Genre item in ViewBag.Genres)
+                    {
+                         <option value="@item.GenreId">@item.GenreName</option>
+                    }
+                </select>
+            </div>
+
+            <input type="hidden" asp-for="GameId" />
+
+            <br />
+            <input type="submit" id="btnSubmit" class="btn btn-success btn-change" />
+        </form>
+    </div>
+</div>

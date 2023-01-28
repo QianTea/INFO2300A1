@@ -1,0 +1,24 @@
+﻿@model EventViewModel
+@{
+    ViewData["title"] = "Edit Event";
+}
+<div asp-validation-summary="All" class="text-danger" id="txtError"></div>
+<div class="row justify-content-center">
+    <div class="col-xl-5 col-md-8">
+        <form method="post" asp-action="EditEvent" asp-controller="Admin">
+            <label asp-for="EventName">Event Name</label>
+            <input type="text" asp-for="EventName" id="txtEventNameInput" class="form-control" />
+
+            <label asp-for="EventDetails">Event Details</label>
+            <input type="text" asp-for="EventDetails" id="txtEventDetailsInput" class="form-control" />
+
+            <label asp-for="EventDate">Event Date</label>
+            <input type="date" asp-for="EventDate" id="dateEventDateInput" class="form-control" />
+
+            <input type="hidden" asp-for="EventId" />
+
+            <br />
+            <input type="submit" id="btnSubmit" class="btn btn-success btn-change" />
+        </form>
+    </div>
+</div>

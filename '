@@ -1,0 +1,16 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "_comment": "To switch connection strings add // in front of the one you don't want",
+  "ConnectionStrings": {
+    "MarketContext": "Server=localhost;Database=gamemarketsite;Trusted_Connection=True;MultipleActiveResultSets=true",
+    "//MarketContext": "Server=(LocalDb)\\MSSQLLocalDb;Database=gamemarketsite;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}

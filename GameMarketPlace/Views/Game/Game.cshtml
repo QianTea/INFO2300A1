@@ -1,0 +1,185 @@
+﻿@model Game
+@{
+    Genre genre = ViewBag.Genre;
+    bool InWishList = ViewBag.InWishList;
+    List<Review> reviews = ViewBag.Reviews;
+}
+@*<h1>Game</h1>*@
+
+<div class="container bg-dark" >
+
+    @if (Model != null) 
+    {
+        <img class=" img-responsive pt-2" alt="game pic" src="/img/game2.jpg" />
+        <h2 id="txtGameName" class=" pt-4">@Model.GameName</h2>
+    
+        <div class="row">
+            <div class="col-6">
+                <p>Genre: @genre.GenreName</p>
+                <p>Price: $@Model.GamePrice</p>
+            </div>
+            <div class="col-6">
+                @inject SignInManager<Member> signInManger
+                @*Checks to see if the user is logged in*@
+                @if (signInManger.IsSignedIn(User))
+                {
+                    <p>
+                        @if (InWishList)
+                        {
+                            <a class="btn btn-danger " asp-action="RemoveFromWishList" asp-controller="Game" asp-route-id="@Model.GameId" id="btnRemove">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+                                </svg>
+                                Remove from Wishlist
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger " asp-action="AddToWishList" asp-controller="Game" asp-route-id="@Model.GameId" id="btnAdd">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                    <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+                                </svg>
+                                Add to Wishlist
+                            </a>
+                        }
+                    </p>
+                    <p>
+                        <a class="btn btn-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                            </svg>
+                        Add to Cart
+                        </a>
+                    </p>
+                    }
+            </div>
+        </div>
+        <article class="pb-4">
+            A detailed introduction to the game will be shown here later
+        </article>
+    }
+    else
+    {
+        <h3>No game found!</h3>
+    }
+</div>
+@*Reviews*@
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-8">
+            <h2>Reviews</h2>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-outline-info" asp-action="WriteReview" asp-controller="Review" asp-route-id="@Model.GameId" id="btnWriteReview">Write Review</a>
+        </div>
+    </div>
+
+</div>
+@*Rate Count*@
+<div class="card bg-dark p-1">
+    <div class="row justify-content-left d-flex">
+        <div class="col-4">
+            <h1 class="pt-4">4.0</h1>
+            <p class="text-white-50">out of 5</p>
+        </div>
+        <div class="col-8">
+            <div class="rating-bar0 justify-content-center">
+                <table class="text-left mx-auto">
+                    <tbody>
+                        <tr>
+                            <td class="rating-label">Excellent</td>
+                            <td class="rating-bar">
+                                <div class="bar-container">
+                                    <div class="bar-5"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">123</td>
+                        </tr>
+                        <tr>
+                            <td class="rating-label">Good</td>
+                            <td class="rating-bar">
+                                <div class="bar-container">
+                                    <div class="bar-4"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">23</td>
+                        </tr>
+                        <tr>
+                            <td class="rating-label">Average</td>
+                            <td class="rating-bar">
+                                <div class="bar-container">
+                                    <div class="bar-3"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">10</td>
+                        </tr>
+                        <tr>
+                            <td class="rating-label">Poor</td>
+                            <td class="rating-bar">
+                                <div class="bar-container">
+                                    <div class="bar-2"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">3</td>
+                        </tr>
+                        <tr>
+                            <td class="rating-label">Terrible</td>
+                            <td class="rating-bar">
+                                <div class="bar-container">
+                                    <div class="bar-1"></div>
+                                </div>
+                            </td>
+                            <td class="text-right">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+@*    
+add loop here to show the list of reviews
+need ReviewerName/ rate/ date/ reviewTitle/ reviewDetail 
+*@
+@foreach(Review review in reviews)
+{
+    <br />
+    <div class="card bg-dark p-1">
+        <div class="row justify-content-left d-flex">
+            <div class="col-md-4 d-flex flex-column">
+                @*Reviewer Name /Rate/Review date*@
+                <h5 class="pt-4">@review.MemberName</h5>
+                <h6>Rating: @review.Rating</h6>
+            </div>
+            <div class="col-md-8">
+                <div class="justify-content-center">
+                    @*reviewDetail*@
+                    <p>@review.ReviewComments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*@if (Model != null) 
+{
+    <h4 id="txtGameName">@Model.GameName</h4>
+    <h4>Price: $@Model.GamePrice</h4>
+    <h5>Inventory: @Model.Inventory</h5>
+    <h6>Genre: @genre.GenreName</h6>
+
+    if (InWishList) 
+    {
+        <a asp-action="RemoveFromWishList" asp-controller="Game" asp-route-id="@Model.GameId" id="btnRemove">Remove from Wishlist</a>
+    }
+    else 
+    {
+        <a asp-action="AddToWishList" asp-controller="Game" asp-route-id="@Model.GameId" id="btnAdd">Add to Wishlist</a>
+    }
+}
+else 
+{
+    <h3>No game found!</h3>
+}
+*@

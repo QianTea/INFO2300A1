@@ -1,0 +1,9 @@
+﻿Forgot Password:
+	[X] - Generate a link in login page to take to forgot password page
+	[X] - Get users email from input
+	[X] - Find user in the controller
+	[ ] - Change password
+	[ ] - Send the new password in an email
+
+Promotion Emails:
+	[ ] - Get it to work
